@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+sanic = "*"
+gino = "*"
+sanic-restful-api = "*"
+dotenv = "*"
+python-dotenv = "*"
+werkzeug = "*"
+
+[requires]
+python_version = "3.6"
