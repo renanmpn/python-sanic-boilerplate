@@ -14,7 +14,7 @@ from app.domain import user_domain
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        authenticated = getattr(g, 'authenticated', False)
+        authenticated = getattr(request, 'authenticated', False)
         if not authenticated:
             return abort(401, '{"result": "Not Authorized"}')
         return f(*args, **kwargs)
@@ -35,7 +35,6 @@ class ResourceBase(Resource):
         pass
 
     def __init__(self, request_to_restful):
-        super().__init__(request=request_to_restful)
         self._me = None
         if self.logged_user is not None:
             self._me = user_domain.User.create_with_logged(self.logged_user)
@@ -105,7 +104,7 @@ class ResourceBase(Resource):
 
     @property
     def logged_user(self):
-        return getattr(g, 'user', None)
+        return getattr(request, 'user', None)
 
     @property
     def files(self):
@@ -146,7 +145,7 @@ class ResourceBase(Resource):
 
 class SomethingResource(ResourceBase):
     @login_required
-    async def get(self, request):
+    async def get(self, get_request):
         try:
             print("Hey nice to have you here")
             # print(some_random_param)
@@ -155,7 +154,7 @@ class SomethingResource(ResourceBase):
             return self.return_unexpected_error()
 
     @login_required
-    async def post(self, request):
+    async def post(self, post_request):
         try:
             return json(self.return_ok(created_at=1452))
         except Exception:

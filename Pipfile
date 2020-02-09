@@ -12,6 +12,7 @@ sanic-restful-api = "*"
 dotenv = "*"
 python-dotenv = "*"
 werkzeug = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.6"
